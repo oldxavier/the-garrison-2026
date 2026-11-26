@@ -220,17 +220,23 @@ function groups() {
   });
 }
 
-// the playoffs: one column per stage, each series opening its games below
+// the playoffs: one column per stage, each series opening its games below. A bracket laid out ahead
+// shows its matches still to come too: a dash for a player not known yet, no score before a game
 function bracket() {
   const el = document.getElementById("bracket");
   if (!D.bracket.length) return el.remove();
   const byId = Object.fromEntries(D.series.map((s) => [s.id, s]));
-  const side = (s, t, w) => `<div class="slot ${s.winner === t ? "won" : ""}"><span>${esc(team(t))}</span><b>${w}</b></div>`;
+  const side = (m, i) => {
+    const t = i ? m.b : m.a;
+    return `<div class="slot${m.winner && m.winner === t ? " won" : ""}${t ? "" : " tbd"}"><span>${t ? esc(team(t)) : "–"}</span><b>${m.score ? m.score[i] : ""}</b></div>`;
+  };
+  const match = (m) => (m.series
+    ? `<a class="match" href="#series-${m.series}" data-series="${m.series}">${side(m, 0)}${side(m, 1)}</a>`
+    : `<div class="match todo">${side(m, 0)}${side(m, 1)}</div>`);
   const grid = (stages) => `<div class="bracket-grid">${stages
       .map(
-        (st) => `<div class="stage"><p class="section-label">${esc(st.stage)}</p><div class="matches">${st.series
-          .map((id) => byId[id])
-          .map((s) => `<a class="match" href="#series-${s.id}" data-series="${s.id}">${side(s, s.a, s.score[0])}${side(s, s.b, s.score[1])}</a>`)
+        (st) => `<div class="stage"><p class="section-label">${esc(st.stage)}${st.bo ? ` <span class="bo">Bo${st.bo}</span>` : ""}</p><div class="matches">${st.matches
+          .map(match)
           .join("")}</div></div>`
       )
       .join("")}</div>`;
@@ -242,8 +248,9 @@ function bracket() {
     : `<h3>Playoffs</h3>${grid(D.bracket)}`;
   el.innerHTML += `
     <div class="group-series">${D.bracket
-      .flatMap((st) => st.series)
-      .map((id) => seriesRow(byId[id]))
+      .flatMap((st) => st.matches)
+      .filter((m) => m.series)
+      .map((m) => seriesRow(byId[m.series]))
       .join("")}</div>`;
   el.addEventListener("click", (e) => {
     const a = e.target.closest("a[data-series]");

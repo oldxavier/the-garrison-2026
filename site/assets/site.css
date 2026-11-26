@@ -636,6 +636,10 @@ footer {
 .slot.won { color: var(--ink); font-weight: 650; }
 .slot b { font: 500 .88rem var(--mono); }
 .slot.won b { color: var(--green); }
+/* a match still to come: drawn, but quieter, and not a link */
+.match.todo { border-style: dashed; background: none; }
+.slot.tbd span { color: var(--muted); opacity: .7; }
+.stage .bo { margin-left: .3rem; color: var(--muted); font-weight: 400; letter-spacing: .02em; }
 .bracket .group-series { margin-top: 1.6rem; }
 .bracket.only { margin-top: 0; padding-top: 0; border-top: 0; }     /* the bracket is the whole tournament */
 .bracket h3.lower { margin-top: 2rem; }
