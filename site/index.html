@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Garrison 2026 Stats</title>
+  <meta name="description" content="Records, early-game timings and oddities from The Garrison 2026">
+  <meta property="og:title" content="The Garrison 2026 Stats">
+  <meta property="og:description" content="Records, early-game timings and oddities from The Garrison 2026">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oldxavier.github.io/the-garrison-2026/">
+  <link rel="stylesheet" href="assets/site.css?v=47d6103001">
+  <script src="assets/site.js?v=47d6103001" defer></script>
+  <script src="assets/replay.js?v=47d6103001" defer></script>
+  <script data-goatcounter="https://oldxavier.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script>navigator.webdriver || fetch("https://oldxavier-sites.pages.dev/v?p=" + encodeURIComponent(location.pathname), {method: "POST", mode: "no-cors", keepalive: true}).catch(() => {});</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="top">
+    <nav aria-label="Primary">
+      <a class="brand" href="#top"><span>TG26</span> The Garrison 2026 Stats</a>
+      <div class="nav-links">
+        <a href="#groups">Groups</a>
+        <a href="#records">Records</a>
+        <a href="#h2h" hidden>Head to head</a>
+        <a href="#players" data-solo="Players">Teams & players</a>
+        <a href="#civs">Civs</a>
+        <a href="#curves">Over time</a>
+        <a href="#replays">Replays</a>
+        <a data-link="liquipedia" href="https://liquipedia.net/ageofempires/The_Garrison/2026">Liquipedia</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <h1>The Garrison 2026</h1>
+      <div class="hero-actions">
+        <a class="button primary" href="#records">See the records</a>
+        <a class="button secondary" data-link="discord" href="">Join the Rage Forest Discord</a>
+      </div>
+    </div>
+
+    <div class="stats" id="summary" aria-label="Tournament summary">
+      <div><strong>–</strong><span>games captured</span></div>
+      <div><strong>–</strong><span>players</span></div>
+      <div><strong>–</strong><span>last update</span></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section band" id="groups" aria-labelledby="groups-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">Group stage</p>
+          <h2 id="groups-title">Standings</h2>
+        </div>
+        <div class="heading-note">
+          <p>Double elimination. Every match is best of five, except the lower bracket final (best of seven) and the grand final (best of nine).</p>
+          <p class="small"></p>
+        </div>
+      </div>
+      <div class="group-grid" id="group-tables"></div>
+      <div class="bracket" id="bracket"></div>
+
+    </section>
+
+    <section class="section" id="records" aria-labelledby="records-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">Leaderboards</p>
+          <h2 id="records-title">Records</h2>
+        </div>
+        <div class="heading-note"><p id="records-blurb">Single-game records unless a board says “all games”. Every entry names the game it came from.</p></div>
+      </div>
+      <div class="category-bar">
+        <div class="scope-switch" id="category-switch" role="tablist" aria-label="Record category"></div>
+      </div>
+      <p class="category-blurb" id="category-blurb"></p>
+      <div class="board-grid" id="boards"></div>
+    </section>
+
+    <section class="section" id="h2h" aria-labelledby="h2h-title" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="section-label">One game, both players</p>
+          <h2 id="h2h-title">Head to head</h2>
+        </div>
+        <div class="heading-note"><p>Every measure for the two players of one game. A dot marks the better value wherever more or less is plainly better; eAPM, market use and walls are shown without one.</p></div>
+      </div>
+      <div class="h2h-bar">
+        <label class="replay-pick"><span>Game</span><select id="h2h-game"></select></label>
+        <div class="h2h-window"><span class="control-label">Chart minutes</span><div class="seg" id="h2h-window" role="group" aria-label="Chart minutes"></div></div>
+        <a class="button secondary" id="h2h-replay" href="#replays">Watch the replay</a>
+      </div>
+      <div class="h2h-head" id="h2h-head"></div>
+      <div class="h2h-layout">
+        <div class="table-shell h2h-shell"><table class="h2h-table" id="h2h-table"></table></div>
+        <div class="h2h-charts" id="h2h-charts"></div>
+      </div>
+    </section>
+    <section class="section band" id="players" aria-labelledby="players-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label" data-solo="Every player">Every team and player</p>
+          <h2 id="players-title" data-solo="Players">Teams &amp; players</h2>
+        </div>
+      </div>
+      <h3 class="table-title" data-teams>Teams</h3>
+      <div class="table-shell team-shell" data-teams>
+        <table class="player-table" id="team-table"><thead></thead><tbody></tbody></table>
+      </div>
+      <h3 class="table-title" data-teams>Players</h3>
+      <div class="leader-controls">
+        <label><span data-solo="Find a player">Find a player or team</span><input id="player-search" type="search" placeholder="e.g. Juyhou" data-solo-placeholder="e.g. Hera" autocomplete="off"></label>
+        <div><span class="control-label">Games played as</span><div class="scope-switch role-switch" role="group" aria-label="Player role"></div></div>
+        <div><span class="control-label">Civs</span><div class="civ-filter" id="players-civs"></div></div>
+        <div data-maps hidden><span class="control-label">Maps</span><div class="civ-filter" id="players-maps"></div></div>
+      </div>
+      <p class="sort-help">Select a column heading to sort.</p>
+      <div class="table-shell">
+        <table class="player-table" id="player-table"><thead></thead><tbody><tr><td class="loading" colspan="12">Loading…</td></tr></tbody></table>
+      </div>
+    </section>
+
+    <section class="section" id="civs" aria-labelledby="civs-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">Civilizations</p>
+          <h2 id="civs-title">Picks and win rates</h2>
+        </div>
+      </div>
+      <figure class="civ-plot" id="civ-plot"><p class="loading">Loading…</p></figure>
+    </section>
+
+    <section class="section band" id="curves" aria-labelledby="curves-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">Every player, minute by minute</p>
+          <h2 id="curves-title">Over time</h2>
+        </div>
+      </div>
+      <div class="leader-controls curve-controls">
+        <div><span class="control-label">Show</span><div class="scope-switch" id="curve-metric" role="group" aria-label="Measure"></div></div>
+        <div><span class="control-label">Games played as</span><div class="scope-switch role-switch" id="curve-role" role="group" aria-label="Player role"></div></div>
+        <div><span class="control-label">Civs</span><div class="civ-filter" id="curve-civs"></div></div>
+        <div data-maps hidden><span class="control-label">Maps</span><div class="civ-filter" id="curve-maps"></div></div>
+        <div class="curve-window">
+          <span class="control-label">Minutes</span>
+          <div class="seg" id="curve-presets" role="group" aria-label="Time window"></div>
+          <div class="curve-range">
+            <label for="curve-from">From</label><input type="range" id="curve-from" min="0" step="1" value="0">
+            <label for="curve-to">to</label><input type="range" id="curve-to" min="1" step="1" value="60">
+            <output id="curve-span">0:00–60:00</output>
+          </div>
+        </div>
+      </div>
+      <div class="curve-board">
+        <div class="curve-chart" id="curve-chart">
+          <svg id="curve-svg" role="img" aria-labelledby="curves-title"></svg>
+          <p class="loading" id="curve-loading">Loading…</p>
+          <div class="curve-tip" id="curve-tip" hidden></div>
+        </div>
+        <div class="curve-side">
+          <p class="curve-side-head" id="curve-side-head"></p>
+          <ol class="curve-list" id="curve-list"></ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section replays" id="replays" aria-labelledby="replay-title">
+      <div class="replay-head">
+        <div>
+          <p class="section-label">Replays</p>
+          <h2 class="replay-title" id="replay-title">Watch any game</h2>
+        </div>
+        <label class="replay-pick"><span>Game</span><select id="game-select"></select></label>
+      </div>
+      <div class="replay-layout">
+        <div class="replay-stage">
+          <canvas id="map" aria-label="Animated map of the game"></canvas>
+          <div class="replay-controls">
+            <button type="button" class="button primary" id="play">Play</button>
+            <div class="scope-switch" id="speed" role="group" aria-label="Speed"></div>
+            <input type="range" id="scrub" min="0" max="1" step="1" value="0" aria-label="Game time">
+            <span class="replay-clock" id="clock">0:00</span>
+          </div>
+        </div>
+        <aside class="replay-legend" id="legend" aria-label="Players"></aside>
+      </div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <p class="section-label">About the numbers</p>
+      <h2 id="about-title">How this is made</h2>
+      <p class="about-copy">Every game's recording is replayed from start to finish in CaptureAge, which logs
+        every unit, building and death and each player's statistics as the game plays:
+        <b id="data-points">millions of data points</b> so far, and every leaderboard is recomputed from
+        all of them whenever a new series is added.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>The Garrison 2026 Stats<span data-link-wrap> · <a data-link="liquipedia" href="https://liquipedia.net/ageofempires/The_Garrison/2026">Liquipedia</a></span><span data-link-wrap> · <a data-link="discord" href="">Rage Forest Discord</a></span> · <a href="https://oldxavier.github.io/rageforest-ratings/">Rage Forest Ratings</a></span>
+    <a href="#top">Back to top</a>
+  </footer>
+</body>
+</html>
