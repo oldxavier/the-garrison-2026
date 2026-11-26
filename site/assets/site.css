@@ -642,7 +642,7 @@ footer {
 .stage .bo { margin-left: .3rem; color: var(--muted); font-weight: 400; letter-spacing: .02em; }
 .bracket .group-series { margin-top: 1.6rem; }
 .bracket.only { margin-top: 0; padding-top: 0; border-top: 0; }     /* the bracket is the whole tournament */
-.bracket h3.lower { margin-top: 2rem; }
+.bracket h3.loser { margin-top: 2rem; }
 
 /* awards */
 .award-gallery { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; }

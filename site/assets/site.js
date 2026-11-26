@@ -96,7 +96,7 @@ function soloCopy() {
 // a playoff game's stage, shortened (QF, SF, F), so it stands apart from the same teams' group game
 const STAGE_SHORT = {
   Quarterfinals: "QF", Semifinals: "SF", Final: "F",
-  // double elimination: the upper (WB) and lower (LB) brackets
+  // double elimination: the winner (WB) and loser (LB) brackets
   "WB Round of 8": "WB R8", "WB Semifinals": "WB SF", "WB Final": "WB F", "LB Round 1": "LB R1",
   "LB Round 2": "LB R2", "LB Semifinals": "LB SF", "LB Final": "LB F", "Grand Final": "GF",
 };
@@ -240,11 +240,11 @@ function bracket() {
           .join("")}</div></div>`
       )
       .join("")}</div>`;
-  // double elimination: the upper bracket (with the grand final) above the lower one
-  const lower = D.bracket.filter((st) => st.side === "lower");
-  const sides = D.bracket.some((st) => st.side);           // double elimination, lower bracket played or not
+  // double elimination: the winner bracket (with the grand final) above the loser bracket
+  const loser = D.bracket.filter((st) => st.side === "loser");
+  const sides = D.bracket.some((st) => st.side);           // double elimination, loser bracket played or not
   el.innerHTML = sides
-    ? `<h3>Upper bracket</h3>${grid(D.bracket.filter((st) => st.side !== "lower"))}${lower.length ? `<h3 class="lower">Lower bracket</h3>${grid(lower)}` : ""}`
+    ? `<h3>Winner bracket</h3>${grid(D.bracket.filter((st) => st.side !== "loser"))}${loser.length ? `<h3 class="loser">Loser bracket</h3>${grid(loser)}` : ""}`
     : `<h3>Playoffs</h3>${grid(D.bracket)}`;
   el.innerHTML += `
     <div class="group-series">${D.bracket
