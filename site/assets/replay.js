@@ -41,9 +41,11 @@ window.addEventListener("hashchange", () => {
   S ? open(linked()) : start();          // while loading, start() opens the linked game itself
 });
 if (linked()) start();
-// the stats above are drawn after their data arrives; until then this section sits near the top
+// the stats above are drawn after their data arrives, and until then this section sits near the top:
+// wait for site.js to say the page is drawn. (It used to wait for a group table, which a bracket-only
+// tournament never draws, so its replays never started.)
 function watchSection() {
-  if (!document.querySelector("#group-tables .group")) return setTimeout(watchSection, 200);
+  if (!("drawn" in document.documentElement.dataset)) return document.addEventListener("stats-drawn", watchSection, { once: true });
   if (!document.getElementById("replays")) return;      // no replays in this tournament
   new IntersectionObserver((seen, obs) => {
     if (seen.some((e) => e.isIntersecting)) {
